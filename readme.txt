@@ -56,12 +56,12 @@ Those are the current parameters that the plugin supports. Let's look at an exam
 	echo '<ul>';
 	$posts = wmp_get_popular( array( 'limit' => 10, 'post_type' => 'post', 'range' => 'all_time' ) );
 	global $post;
-	foreach ( $posts as $post ):
+	if ( count( $posts ) > 0 ): foreach ( $posts as $post ):
 		setup_postdata( $post );
 		?>
 		<li><a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></a></li>
 		<?php
-	endforeach;
+	endforeach; endif;
 	echo '</ul>';
 	?>
 
