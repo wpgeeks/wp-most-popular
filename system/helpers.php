@@ -42,7 +42,8 @@ function wmp_get_popular( $args = array() ) {
 		FROM {$wpdb->prefix}most_popular mp
 		INNER JOIN {$wpdb->prefix}posts p ON mp.post_id = p.ID
 		WHERE
-			p.post_type = '%s'
+			p.post_type = '%s' AND
+			p.post_status = 'publish'
 		{$order}
 		LIMIT %d
 	", array( $post_type, $limit ) ), OBJECT );
