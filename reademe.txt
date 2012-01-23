@@ -30,7 +30,14 @@ Setting up WP Most Popular is very simple. Follow these easy steps
 
 = What are the minimum requirements for the plugin? =
 
-You will need a web server or shared host that supports a version 5 or newer of PHP.
+You will need a web server or shared host that supports a version 5 or newer of PHP. Javascript is also required to log post
+views.
+
+= Why does the plugin use Javascript to track the post views? =
+
+The original version of the plugin that I wrote used PHP to track the post views and the reason why I switched to Javascript was
+because if a caching plugin is enabled on your blog, the page will be loaded statically to your visitor and the PHP code to log
+a view on a post will not be run.
 
 = Can I request a feature? =
 
