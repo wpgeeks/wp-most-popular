@@ -64,6 +64,10 @@ if ( phpversion() > 5 ) {
 			include_once( WMP_PATH . 'system/setup.php' );
 			WMP_setup::uninstall();
 		}
+		
+		public static function widget() {
+			register_widget( 'WMP_Widget' );
+		}
 	}
 	
 	// Use ajax for tracking popular posts
@@ -74,7 +78,5 @@ if ( phpversion() > 5 ) {
 	
 	// Widget
 	include_once( WMP_PATH . 'system/widget.php' );
-	add_action( 'widgets_init', function(){
-		return register_widget( 'WMP_Widget' );
-	} );
+	add_action( 'widgets_init', 'WMP_system::widget' );
 }
