@@ -69,5 +69,12 @@ if ( phpversion() > 5 ) {
 	// Use ajax for tracking popular posts
 	add_action( 'wp_head', 'WMP_system::javascript' );
 	add_action( 'wp_ajax_wmp_update', 'WMP_system::actions' );
-	add_action( 'wp_ajax_nopriv_wmp_update', 'WMP_system::actions' ); // Comment out to stop logging stats for admin and logged in users
+	// Comment out to stop logging stats for admin and logged in users
+	add_action( 'wp_ajax_nopriv_wmp_update', 'WMP_system::actions' );
+	
+	// Widget
+	include_once( WMP_PATH . 'system/widget.php' );
+	add_action( 'widgets_init', function(){
+		return register_widget( 'WMP_Widget' );
+	} );
 }

@@ -26,7 +26,7 @@ function wmp_get_popular( $args = array() ) {
 		CASE 'monthly':
 			$order = "ORDER BY 30_day_stats DESC";
 			break;
-		CASE 'week':
+		CASE 'weekly':
 			$order = "ORDER BY 7_day_stats DESC";
 			break;
 		CASE 'daily':
@@ -45,7 +45,7 @@ function wmp_get_popular( $args = array() ) {
 			p.post_type = '%s'
 		{$order}
 		LIMIT %d
-	", array( $post_type, $limit ) ) );
+	", array( $post_type, $limit ) ), OBJECT );
 	
 	if ( ! $result) {
 		return array();
