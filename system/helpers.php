@@ -4,7 +4,7 @@ function wmp_get_popular( $args = array() ) {
 	
 	// Default arguments
 	$limit = 5;
-	$post_type = 'post';
+	$post_type = array( 'post' );
 	$range = 'all_time';
 	
 	if ( isset( $args['limit'] ) ) {
@@ -12,6 +12,7 @@ function wmp_get_popular( $args = array() ) {
 	}
 	
 	if ( isset( $args['post_type'] ) ) {
+		// $post_type = $args['post_type'];
 		if ( is_array( $args['post_type'] ) ) {
 			$post_type = $args['post_type'];
 		} else {
@@ -40,8 +41,7 @@ function wmp_get_popular( $args = array() ) {
 			$order = "ORDER BY all_time_stats DESC";
 			break;
 	}
-	
-	$holder = implode( ',', array_fill( 0, count( $args['post_type'] ), '%s') );
+	$holder = implode( ',', array_fill( 0, count( $post_type ), '%s') );
 	$sql = "
 		SELECT p.*
 		FROM {$wpdb->prefix}most_popular mp, {$wpdb->prefix}posts p
@@ -53,7 +53,6 @@ function wmp_get_popular( $args = array() ) {
 		LIMIT %d
 	";
 	$result = $wpdb->get_results( $wpdb->prepare( $sql, array_merge( $post_type, array( $limit ) ) ), OBJECT );
-	
 	if ( ! $result) {
 		return array();
 	}
