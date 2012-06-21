@@ -2,8 +2,8 @@
 Contributors: MattGeri
 Tags: popular, most viewed, popular posts, most viewed posts, popular posts widget, popular custom type posts, most view widget, most view posts widget
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 0.1
+Tested up to: 3.4
+Stable tag: 0.2
 
 WP Most Popular is a simple plugin which tracks your most popular blog posts based on views and lets you display them in your theme or blog sidebar.
 
@@ -15,11 +15,11 @@ The plugin keeps a log of your most popular posts based on views and lets you di
 
 It also comes with a sidebar widget to let you display your popular posts on your blogs sidebar.
 
-If you are a developer and integrate the plugin in to a theme, you will get a lot more flexibility out of the plugin including the ability to show the most popular custom post types etc.
+If you are a developer and integrate the plugin in to a theme, you will get a lot more flexibility out of the plugin including the ability to show the most popular custom post types, filter by term IDs, etc.
 
 == Installation ==
 
-Setting up WP Most Popular is very simple. Follow these easy steps
+Setting up WP Most Popular is very simple. Follow these easy steps:
 
 1.	Upload the plugin to your `/wp-content/plugins/` directory
 2.	Activate the plugin in your WordPress admin
@@ -49,12 +49,16 @@ You can pass that function the following parameters in array form:
 	*	In what date range would you like to display popular posts in
 	*	Accepted: all_time, monthly, weekly, daily
 	*	Default: all_time
+*	**terms** (string)
+	*	Filters all posts using a list of term IDs separated by commas, no spaces required
+	*	Accepted: 1,2,3,1337
+	*	Default: All terms
 
 Those are the current parameters that the plugin supports. Let's look at an example of how to display the most recent popular posts in a unordered list.
 
 	<?php
 	echo '<ul>';
-	$posts = wmp_get_popular( array( 'limit' => 10, 'post_type' => 'post', 'range' => 'all_time' ) );
+	$posts = wmp_get_popular( array( 'limit' => 10, 'post_type' => 'post', 'range' => 'all_time', 'terms' => '1,2,3,1337' ) );
 	global $post;
 	if ( count( $posts ) > 0 ): foreach ( $posts as $post ):
 		setup_postdata( $post );
@@ -88,6 +92,9 @@ Yes, please do so on the WordPress support forum for the plugin. I will consider
 Yes! The plugin is open source and I host it on [Github](https://github.com/MattGeri/WP-Most-Popular). Feel free to send me pull requests.
 
 == Changelog ==
+
+= 0.2 =
+*   Filter by term IDs feature - thanks @neojp
 
 = 0.1 =
 *	First version of the plugin released
