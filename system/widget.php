@@ -24,6 +24,10 @@ class WMP_Widget extends WP_Widget {
 				<option value="daily"<?php if ( $defaults['timeline'] == 'daily' ) echo "selected"; ?>>Today</option>
 			</select>
 		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'terms' ); ?>">Filter by term IDs:</label>
+			<input id="<?php echo $this->get_field_id( 'terms' ); ?>" name="<?php echo $this->get_field_name( 'terms' ); ?>" type="text" value="<?php echo $defaults['terms']; ?>" size="10">
+		</p>
 		<?php
 	}
 	
@@ -42,6 +46,11 @@ class WMP_Widget extends WP_Widget {
 			$options['timeline'] = esc_attr( $instance[ 'timeline' ] );
 		else
 			$options['timeline'] = 'all';
+
+		if ( isset( $instance[ 'terms' ] ) )
+			$options['terms'] = esc_attr( $instance[ 'terms' ] );
+		else
+			$options['terms'] = '';
 		
 		return $options;
 	}
@@ -57,7 +66,7 @@ class WMP_Widget extends WP_Widget {
 		
 		// Get our posts
 		$defaults	= $this->default_options( $instance );
-		$posts		= wmp_get_popular( array( 'limit' => (int) $defaults[ 'number' ], 'range' => $defaults['timeline'] ) );
+		$posts		= wmp_get_popular( array( 'limit' => (int) $defaults[ 'number' ], 'range' => $defaults['timeline'], 'terms' => $defaults['terms'] ) );
 		
 		// Display the widget
 		echo $before_widget;
