@@ -37,6 +37,25 @@ function wmp_get_popular( $args = array() ) {
 			break;
 	}
 	
+	$language = ICL_LANGUAGE_CODE;
+	
+	if($language) {
+
+	$result = $wpdb->get_results( $wpdb->prepare( "
+		SELECT p.*, icl_translations.*
+		FROM {$wpdb->prefix}most_popular mp
+		INNER JOIN {$wpdb->prefix}posts p ON mp.post_id = p.ID
+		INNER JOIN {$wpdb->prefix}icl_translations icl_translations ON mp.post_id = icl_translations.element_id
+		WHERE
+			icl_translations.language_code = '".$language."' AND
+			p.post_type = '%s' AND
+			p.post_status = 'publish'
+		{$order}
+		LIMIT %d
+	", array( $post_type, $limit ) ), OBJECT );
+	
+	} else {
+		
 	$result = $wpdb->get_results( $wpdb->prepare( "
 		SELECT p.*
 		FROM {$wpdb->prefix}most_popular mp
@@ -47,6 +66,8 @@ function wmp_get_popular( $args = array() ) {
 		{$order}
 		LIMIT %d
 	", array( $post_type, $limit ) ), OBJECT );
+	
+	}
 	
 	if ( ! $result) {
 		return array();
