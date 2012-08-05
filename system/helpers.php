@@ -12,7 +12,6 @@ function wmp_get_popular( $args = array() ) {
 	}
 	
 	if ( isset( $args['post_type'] ) ) {
-		// $post_type = $args['post_type'];
 		if ( is_array( $args['post_type'] ) ) {
 			$post_type = $args['post_type'];
 		} else {
@@ -41,20 +40,27 @@ function wmp_get_popular( $args = array() ) {
 			$order = "ORDER BY all_time_stats DESC";
 			break;
 	}
+
 	$holder = implode( ',', array_fill( 0, count( $post_type ), '%s') );
+	
 	$sql = "
-		SELECT p.*
-		FROM {$wpdb->prefix}most_popular mp, {$wpdb->prefix}posts p
+		SELECT
+			p.*
+		FROM
+			{$wpdb->prefix}most_popular mp,
+			INNER JOIN {$wpdb->prefix}posts p ON mp.post_id = p.ID
 		WHERE
-			mp.post_id = p.ID AND
 			p.post_type IN ( $holder ) AND
 			p.post_status = 'publish'
 		{$order}
 		LIMIT %d
 	";
+
 	$result = $wpdb->get_results( $wpdb->prepare( $sql, array_merge( $post_type, array( $limit ) ) ), OBJECT );
+	
 	if ( ! $result) {
 		return array();
 	}
+	
 	return $result;
 }
