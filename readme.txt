@@ -2,8 +2,8 @@
 Contributors: MattGeri
 Tags: popular, most viewed, popular posts, most viewed posts, popular posts widget, popular custom type posts, most view widget, most view posts widget
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 0.1
+Tested up to: 3.4.1
+Stable tag: 0.2
 
 WP Most Popular is a simple plugin which tracks your most popular blog posts based on views and lets you display them in your theme or blog sidebar.
 
@@ -41,7 +41,7 @@ You can pass that function the following parameters in array form:
 *	**limit** (integer)
 	*	The number of posts you would like to display i.e. 5
 	*	Default: 5
-*	**post_type** (string)
+*	**post_type** (string) / (array)
 	*	The post type you would like to display
 	*	Example: post
 	*	Default: All post types
@@ -73,7 +73,7 @@ Those are the current parameters that the plugin supports. Let's look at an exam
 
 = What are the minimum requirements for the plugin? =
 
-You will need a web server or shared host that supports a version 5 or newer of PHP. Javascript is also required to log post views.
+You will need a web server or shared host that supports PHP version 5 or newer. Javascript is also required to log post views.
 
 = Why does the plugin use Javascript to track the post views? =
 
@@ -88,6 +88,10 @@ Yes, please do so on the WordPress support forum for the plugin. I will consider
 Yes! The plugin is open source and I host it on [Github](https://github.com/MattGeri/WP-Most-Popular). Feel free to send me pull requests.
 
 == Changelog ==
+
+= 0.2 =
+* Added the ability to query multiple different post types (thanks [inc2734](https://github.com/inc2734)
+* You can now also choose a specific post type from the widget
 
 = 0.1 =
 *	First version of the plugin released
