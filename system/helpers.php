@@ -47,7 +47,7 @@ function wmp_get_popular( $args = array() ) {
 		SELECT
 			p.*
 		FROM
-			{$wpdb->prefix}most_popular mp,
+			{$wpdb->prefix}most_popular mp
 			INNER JOIN {$wpdb->prefix}posts p ON mp.post_id = p.ID
 		WHERE
 			p.post_type IN ( $holder ) AND
