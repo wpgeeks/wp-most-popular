@@ -17,6 +17,8 @@ It also comes with a sidebar widget to let you display your popular posts on you
 
 If you are a developer and integrate the plugin in to a theme, you will get a lot more flexibility out of the plugin including the ability to show the most popular custom post types etc.
 
+[Plugin homepage](http://mattgeri.com/projects/wordpress/wp-most-popular/).
+
 == Installation ==
 
 Setting up WP Most Popular is very simple. Follow these easy steps
@@ -90,7 +92,7 @@ Yes! The plugin is open source and I host it on [Github](https://github.com/Matt
 == Changelog ==
 
 = 0.2 =
-* Added the ability to query multiple different post types (thanks [inc2734](https://github.com/inc2734)
+* Added the ability to query multiple different post types (thanks [inc2734](https://github.com/inc2734))
 * You can now also choose a specific post type from the widget
 
 = 0.1 =
