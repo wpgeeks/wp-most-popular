@@ -3,7 +3,7 @@
 	Plugin Name: WP Most Popular
 	Plugin URI: http://mattgeri.com/projects/wordpress/wp-most-popular
 	Description: Flexible plugin to show most popular posts based on views
-	Version: 0.1
+	Version: 0.2
 	Author: Matt Geri
 	Author URI: http://mattgeri.com
 	License: GPL2
