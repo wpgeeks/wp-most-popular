@@ -94,7 +94,7 @@ class WMP_Widget extends WP_Widget {
 		foreach ( $posts as $post ):
 			setup_postdata( $post );
 			?>
-			<li><a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></a></li>
+			<li <?php post_class() ?>><a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></a></li>
 			<?php
 		endforeach;
 		echo '</ul>';
