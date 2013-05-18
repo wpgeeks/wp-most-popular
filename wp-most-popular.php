@@ -1,7 +1,7 @@
 <?php
 /*
 	Plugin Name: WP Most Popular
-	Plugin URI: http://mattgeri.com/projects/wordpress/wp-most-popular
+	Plugin URI: http://mattgeri.com/projects/
 	Description: Flexible plugin to show most popular posts based on views
 	Version: 0.2
 	Author: Matt Geri
