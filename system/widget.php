@@ -89,7 +89,7 @@ class WMP_Widget extends WP_Widget {
 		// Display the widget
 		echo $before_widget;
 		if ( $defaults['title'] ) echo $before_title . $defaults['title'] . $after_title;
-		echo '<ul>';
+		echo '<ul class="wp-most-popular">';
 		global $post;
 		foreach ( $posts as $post ):
 			setup_postdata( $post );
