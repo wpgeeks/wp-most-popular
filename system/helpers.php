@@ -41,23 +41,39 @@ function wmp_get_popular( $args = array() ) {
 			break;
 	}
 
-	$holder = implode( ',', array_fill( 0, count( $post_type ), '%s') );
-	
-	$sql = "
-		SELECT
-			p.*
-		FROM
-			{$wpdb->prefix}most_popular mp
-			INNER JOIN {$wpdb->prefix}posts p ON mp.post_id = p.ID
-		WHERE
-			p.post_type IN ( $holder ) AND
-			p.post_status = 'publish'
-		{$order}
-		LIMIT %d
-	";
+	if ( isset( $args['post_id'] ) ) {
+		// take the user away from the main query to pull data from a specific post
+		$sql = "
+			SELECT
+				1_day_stats, 7_day_stats, 30_day_stats, all_time_stats
+			FROM
+				{$wpdb->prefix}most_popular mp
+			WHERE
+				mp.post_id = '$args[post_id]'
+			LIMIT 1
+		";
 
-	$result = $wpdb->get_results( $wpdb->prepare( $sql, array_merge( $post_type, array( $limit ) ) ), OBJECT );
-	
+		$result = $wpdb->get_results( $wpdb->prepare( $sql ) );
+
+	} else {
+
+		$holder = implode( ',', array_fill( 0, count( $post_type ), '%s') );
+		
+		$sql = "
+			SELECT
+				p.*
+			FROM
+				{$wpdb->prefix}most_popular mp
+				INNER JOIN {$wpdb->prefix}posts p ON mp.post_id = p.ID
+			WHERE
+				p.post_type IN ( $holder ) AND
+				p.post_status = 'publish'
+			{$order}
+			LIMIT %d
+		";
+
+		$result = $wpdb->get_results( $wpdb->prepare( $sql, array_merge( $post_type, array( $limit ) ) ), OBJECT );
+	}
 	if ( ! $result) {
 		return array();
 	}
