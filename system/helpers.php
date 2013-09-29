@@ -6,7 +6,6 @@ function wmp_get_popular( $args = array() ) {
 	$limit = 5;
 	$post_type = array( 'post' );
 	$range = 'all_time';
-	$post_id = null;
 	
 	if ( isset( $args['limit'] ) ) {
 		$limit = $args['limit'];
@@ -46,11 +45,11 @@ function wmp_get_popular( $args = array() ) {
 		// take the user away from the main query to pull data from a specific post
 		$sql = "
 			SELECT
-				p.*
+				1_day_stats, 7_day_stats, 30_day_stats, all_time_stats
 			FROM
 				{$wpdb->prefix}most_popular mp
 			WHERE
-				p.post_id = '" . $args['post_id'] . "'
+				mp.post_id = '$args[post_id]'
 			LIMIT 1
 		";
 
