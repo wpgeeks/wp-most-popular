@@ -3,7 +3,7 @@ class WMP_Widget extends WP_Widget {
 	public function __construct() {
 		parent::WP_Widget( 'wmp_widget', 'WP Most Popular', array( 'description' => 'Display your most popular blog posts on your sidebar' ) );
 	}
-	
+
 	public function form( $instance ) {
 		$defaults = $this->default_options( $instance );
 		?>
@@ -41,18 +41,18 @@ class WMP_Widget extends WP_Widget {
 		</p>
 		<?php
 	}
-	
+
 	private function default_options( $instance ) {
 		if ( isset( $instance[ 'title' ] ) )
 			$options['title'] = esc_attr( $instance[ 'title' ] );
 		else
 			$options['title'] = 'Popular posts';
-			
+
 		if ( isset( $instance[ 'number' ] ) )
 			$options['number'] = (int) $instance[ 'number' ];
 		else
 			$options['number'] = 5;
-		
+
 		if ( isset( $instance[ 'post_type' ] ) )
 			$options['post_type'] = esc_attr( $instance[ 'post_type' ] );
 		else
@@ -62,19 +62,19 @@ class WMP_Widget extends WP_Widget {
 			$options['timeline'] = esc_attr( $instance[ 'timeline' ] );
 		else
 			$options['timeline'] = 'all_time';
-		
+
 		return $options;
 	}
-	
+
 	public function update( $new, $old ) {
 		$instance = wp_parse_args( $new, $old );
 		return $instance;
 	}
-	
+
 	public function widget( $args, $instance ) {
 		// Find default args
 		extract( $args );
-		
+
 		// Get our posts
 		$defaults			= $this->default_options( $instance );
 		$options['limit']	= (int) $defaults[ 'number' ];
@@ -85,7 +85,7 @@ class WMP_Widget extends WP_Widget {
 		}
 
 		$posts = wmp_get_popular( $options );
-		
+
 		// Display the widget
 		echo $before_widget;
 		if ( $defaults['title'] ) echo $before_title . $defaults['title'] . $after_title;
@@ -94,12 +94,22 @@ class WMP_Widget extends WP_Widget {
 		foreach ( $posts as $post ):
 			setup_postdata( $post );
 			?>
-			<li <?php post_class() ?>><a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></a></li>
+			<li <?php post_class() ?>>
+				<a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>">
+					<?php if ( has_post_thumbnail() ) { // check if the post has a Post Thumbnail assigned to it.
+			      the_post_thumbnail('top_spots', array('class'	=> "media-object pull-left"));
+			    }	?>
+			    <span class="media-body">
+						<h5 class="media-heading"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></h5>
+						<time class="published" datetime="<?php echo get_the_time('c'); ?>"><?php echo get_the_date(); ?></time>
+					</span>
+				</a>
+			</li>
 			<?php
 		endforeach;
 		echo '</ul>';
 		echo $after_widget;
-		
+
 		// Reset post data
 		wp_reset_postdata();
 	}
