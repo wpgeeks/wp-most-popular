@@ -93,19 +93,14 @@ class WMP_Widget extends WP_Widget {
 		global $post;
 		foreach ( $posts as $post ):
 			setup_postdata( $post );
-			?>
-			<li <?php post_class() ?>>
-				<a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>">
-					<?php if ( has_post_thumbnail() ) { // check if the post has a Post Thumbnail assigned to it.
-			      the_post_thumbnail('top_spots', array('class'	=> "media-object pull-left"));
-			    }	?>
-			    <span class="media-body">
-						<h5 class="media-heading"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></h5>
-						<time class="published" datetime="<?php echo get_the_time('c'); ?>"><?php echo get_the_date(); ?></time>
-					</span>
-				</a>
-			</li>
-			<?php
+				$title = get_the_title() ? get_the_title() : get_the_ID();
+				$post_classes = implode(get_post_class());
+				$permalink = get_permalink();
+				$item_output = '<li class="' . $post_classes . '"><a href="' . $permalink . '" title="' . $title . '">' . $title . '</a></li>';
+
+				$post_id = get_the_ID();
+				$item_output = apply_filters('wp_most_popular_item_output', $item_output, $post_id, $title, $post_classes, $permalink);
+				echo $item_output;
 		endforeach;
 		echo '</ul>';
 		echo $after_widget;
