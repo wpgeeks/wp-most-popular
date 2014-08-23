@@ -64,3 +64,29 @@ function wmp_get_popular( $args = array() ) {
 	
 	return $result;
 }
+
+function wmp_view_stats( $post_id ) {
+	global $wpdb;
+
+	$sql = "
+		SELECT
+			post_id,
+			1_day_stats,
+			7_day_stats,
+			30_day_stats,
+			all_time_stats,
+			last_updated
+		FROM
+			{$wpdb->prefix}most_popular
+		WHERE
+			post_id = %d
+	";
+
+	$result = $wpdb->get_row( $wpdb->prepare( $sql, $post_id ) );
+ 
+	if ( ! $result ) {
+		return array();
+	}
+	
+	return $result;
+ }
