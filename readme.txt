@@ -34,7 +34,7 @@ There are two ways in which you can use this plugin.
 
 Using the widget is the easiest way and recommended for most users. If you are a developer and want to integrate the plugin in to your existing theme, then read the information below.
 
-Firstly, the main function which you will need to include in your theme to fetch the popular posts is called `wmp_get_popular()`.
+Firstly, the main function which you will need to include in your theme to fetch the popular posts is called `wp_most_popular_get_popular()`.
 
 You can pass that function the following parameters in array form:
 
@@ -54,7 +54,7 @@ Those are the current parameters that the plugin supports. Let's look at an exam
 
 	<?php
 	echo '<ul>';
-	$posts = wmp_get_popular( array( 'limit' => 10, 'post_type' => 'post', 'range' => 'all_time' ) );
+	$posts = wp_most_popular_get_popular( array( 'limit' => 10, 'post_type' => 'post', 'range' => 'all_time' ) );
 	global $post;
 	if ( count( $posts ) > 0 ): foreach ( $posts as $post ):
 		setup_postdata( $post );
@@ -104,7 +104,7 @@ Yes! The plugin is open source and I host it on [Github](https://github.com/Matt
 == Changelog ==
 
 = 0.3 =
-* New filters and action introduced for use on widget (wmp_list_before, wmp_list_after, wmp_list_item) (thanks to [sanchothefat](https://github.com/sanchothefat))
+* New filters and action introduced for use on widget (wp_most_popular_list_before, wp_most_popular_list_after, wp_most_popular_list_item, wp_most_popular_list_item_single) (thanks to [sanchothefat](https://github.com/sanchothefat) and [callerc1](https://github.com/callerc1))
 * Widget now supports thumbnails (thanks to [eduardo-marcolino](https://github.com/eduardo-marcolino))
 
 = 0.2 =

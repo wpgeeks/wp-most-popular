@@ -107,7 +107,7 @@ class WMP_Widget extends WP_Widget {
 			$options['post_type'] = $defaults['post_type'];
 		}
 
-		$posts					= wmp_get_popular( $options );
+		$posts					= wp_most_popular_get_popular( $options );
 		$thumbnail_size	= preg_match("/\d{1,}x\d{1,}/", $defaults['thumbnail_size']) === 1 ? explode('x', $defaults['thumbnail_size']):  $defaults['thumbnail_size'];
 
 		// Display the widget

@@ -1,5 +1,10 @@
 <?php
 function wmp_get_popular( $args = array() ) {
+	// This function is just for backwards compatibility
+	wp_most_popular_get_popular( $args );
+}
+
+function wp_most_popular_get_popular( $args = array() ) {
 	global $wpdb;
 	
 	// Default arguments
