@@ -113,7 +113,7 @@ class WMP_Widget extends WP_Widget {
 		// Display the widget
 		echo $before_widget;
 		if ( $defaults['title'] ) echo $before_title . $defaults['title'] . $after_title;
-		echo apply_filters( 'wp_most_popular_list_before', '<ul>' );
+		echo apply_filters( 'wp_most_popular_list_before', '<ul class="wp-most-popular">' );
 		global $post;
 		foreach ( $posts as $post ):
 			do_action( 'wp_most_popular_list_item', $post, $defaults );
