@@ -113,13 +113,12 @@ class WMP_Widget extends WP_Widget {
 		// Display the widget
 		echo $before_widget;
 		if ( $defaults['title'] ) echo $before_title . $defaults['title'] . $after_title;
-		echo apply_filters( 'wmp_list_before', '<ul>' );
+		echo apply_filters( 'wp_most_popular_list_before', '<ul>' );
 		global $post;
 		foreach ( $posts as $post ):
-			setup_postdata( $post );
-			do_action( 'wmp_list_items', $post, $defaults );
+			do_action( 'wp_most_popular_list_item', $post, $defaults );
 		endforeach;
-		echo apply_filters( 'wmp_list_after', '</ul>' );
+		echo apply_filters( 'wp_most_popular_list_after', '</ul>' );
 		echo $after_widget;
 
 		// Reset post data
@@ -127,14 +126,21 @@ class WMP_Widget extends WP_Widget {
 	}
 
 	public function list_items( $post, $defaults ) {
-		?>
-		<li <?php post_class() ?>>
-			<a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>">
-				<?php echo (has_post_thumbnail() && $defaults['thumbnail'] == 'before_title') ? get_the_post_thumbnail(get_the_ID(), $thumbnail_size) : '' ?>
-				<?php if ( get_the_title() ) the_title(); else the_ID(); ?>
-				<?php echo (has_post_thumbnail() && $defaults['thumbnail'] == 'after_title') ? get_the_post_thumbnail(get_the_ID(), $thumbnail_size) : '' ?>
-			</a>
-		</li>
-		<?php
+		setup_postdata( $post );
+		$post_id				= get_the_ID();
+		$title					= get_the_title() ? get_the_title() : $post_id;
+		$post_class			= implode(get_post_class());
+		$permalink			= get_permalink();
+		$pre_thumbnail	= (has_post_thumbnail() && $defaults['thumbnail'] == 'before_title') ? get_the_post_thumbnail(get_the_ID(), $thumbnail_size) : '';
+		$post_thumbnail	= (has_post_thumbnail() && $defaults['thumbnail'] == 'after_title') ? get_the_post_thumbnail(get_the_ID(), $thumbnail_size) : '';
+		$item						= '
+			<li class="' . $post_class . '">
+				<a href="' . $permalink . '" title="' . $title . '">
+					' . $pre_thumbnail . $title . $post_thumbnail . '
+				</a>
+			</li>
+		';
+		$item						= apply_filters('wp_most_popular_list_item_single', $item, $post_id, $title, $post_class, $permalink);
+		echo $item;
 	}
 }
