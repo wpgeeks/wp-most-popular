@@ -3,7 +3,7 @@ Contributors: MattGeri
 Tags: popular, most viewed, popular posts, most viewed posts, popular posts widget, popular custom type posts, most view widget, most view posts widget
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 0.2
+Stable tag: 0.3
 
 WP Most Popular is a simple plugin which tracks your most popular blog posts based on views and lets you display them in your theme or blog sidebar.
 
@@ -65,6 +65,19 @@ Those are the current parameters that the plugin supports. Let's look at an exam
 	echo '</ul>';
 	?>
 
+== Other Notes ==
+
+= Filters =
+
+The following filters are available to you:
+
+* **wmp_list_before** - used to filer the <ul> element of the outputted widget list
+* **wmp_list_after** - used to filer the </ul> element of the outputted widget list
+
+= Actions =
+
+* **wmp_list_item** - used for modifying the list output
+
 == Frequently Asked Questions ==
 
 = Why are no posts displaying when I use the widget or call the function in my theme? =
@@ -88,6 +101,10 @@ Yes, please do so on the WordPress support forum for the plugin. I will consider
 Yes! The plugin is open source and I host it on [Github](https://github.com/MattGeri/WP-Most-Popular). Feel free to send me pull requests.
 
 == Changelog ==
+
+= 0.3 =
+* New filters and action introduced for use on widget (wmp_list_before, wmp_list_after, wmp_list_item) (thanks to [sanchothefat](https://github.com/sanchothefat))
+* Widget now supports thumbnails
 
 = 0.2 =
 * Added the ability to query multiple different post types (thanks [inc2734](https://github.com/inc2734))

@@ -39,6 +39,19 @@ class WMP_Widget extends WP_Widget {
 				<option value="daily"<?php if ( $defaults['timeline'] == 'daily' ) echo "selected"; ?>>Today</option>
 			</select>
 		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'thumbnail' ); ?>">Show thumbnail:</label><br />
+			<select id="<?php echo $this->get_field_id( 'thumbnail' ); ?>" name="<?php echo $this->get_field_name( 'thumbnail' ); ?>">
+				<option value="none"<?php if ( $defaults['thumbnail'] == 'none' ) echo "selected"; ?>>Do not show</option>
+				<option value="before_title"<?php if ( $defaults['thumbnail'] == 'before_title' ) echo "selected"; ?>>Before title</option>
+				<option value="after_title"<?php if ( $defaults['thumbnail'] == 'after_title' ) echo "selected"; ?>>After title</option>
+			</select>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'thumbnail_size' ); ?>">Thumbnail size:</label><br />
+			<input id="<?php echo $this->get_field_id( 'thumbnail_size' ); ?>" name="<?php echo $this->get_field_name( 'thumbnail_size' ); ?>" type="text" value="<?php echo $defaults['thumbnail_size']; ?>">
+			<br><small>Image size name or 100x100 for custom size</small>
+		</p>
 		<?php
 	}
 
@@ -62,6 +75,16 @@ class WMP_Widget extends WP_Widget {
 			$options['timeline'] = esc_attr( $instance[ 'timeline' ] );
 		else
 			$options['timeline'] = 'all_time';
+			
+		if ( isset( $instance[ 'thumbnail' ] ) )
+			$options['thumbnail'] = esc_attr( $instance[ 'thumbnail' ] );
+		else
+			$options['thumbnail'] = 'none';
+
+		if ( isset( $instance[ 'thumbnail_size' ] ) )
+			$options['thumbnail_size'] = esc_attr( $instance[ 'thumbnail_size' ] );
+		else
+			$options['thumbnail_size'] = 'thumbnail';
 
 		return $options;
 	}
@@ -76,7 +99,7 @@ class WMP_Widget extends WP_Widget {
 		extract( $args );
 
 		// Get our posts
-		$defaults			= $this->default_options( $instance );
+		$defaults					= $this->default_options( $instance );
 		$options['limit']	= (int) $defaults[ 'number' ];
 		$options['range']	= $defaults['timeline'];
 
@@ -84,27 +107,34 @@ class WMP_Widget extends WP_Widget {
 			$options['post_type'] = $defaults['post_type'];
 		}
 
-		$posts = wmp_get_popular( $options );
+		$posts					= wmp_get_popular( $options );
+		$thumbnail_size	= preg_match("/\d{1,}x\d{1,}/", $defaults['thumbnail_size']) === 1 ? explode('x', $defaults['thumbnail_size']):  $defaults['thumbnail_size'];
 
 		// Display the widget
 		echo $before_widget;
 		if ( $defaults['title'] ) echo $before_title . $defaults['title'] . $after_title;
-		echo apply_filters( 'wp_most_popular_list_before', '<ul>' );
+		echo apply_filters( 'wmp_list_before', '<ul>' );
 		global $post;
 		foreach ( $posts as $post ):
 			setup_postdata( $post );
-			do_action( 'wp_most_popular_list_item', $post );
+			do_action( 'wmp_list_items', $post, $defaults );
 		endforeach;
-		echo apply_filters( 'wp_most_popular_list_after', '</ul>' );
+		echo apply_filters( 'wmp_list_after', '</ul>' );
 		echo $after_widget;
 
 		// Reset post data
 		wp_reset_postdata();
 	}
 
-	public function list_item( $post ) {
+	public function list_items( $post, $defaults ) {
 		?>
-		<li <?php post_class() ?>><a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></a></li>
+		<li <?php post_class() ?>>
+			<a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>">
+				<?php echo (has_post_thumbnail() && $defaults['thumbnail'] == 'before_title') ? get_the_post_thumbnail(get_the_ID(), $thumbnail_size) : '' ?>
+				<?php if ( get_the_title() ) the_title(); else the_ID(); ?>
+				<?php echo (has_post_thumbnail() && $defaults['thumbnail'] == 'after_title') ? get_the_post_thumbnail(get_the_ID(), $thumbnail_size) : '' ?>
+			</a>
+		</li>
 		<?php
 	}
 }
