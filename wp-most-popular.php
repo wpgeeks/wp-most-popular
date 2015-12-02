@@ -79,5 +79,5 @@ if ( phpversion() > 5 ) {
 	// Widget
 	include_once( WMP_PATH . 'system/widget.php' );
 	add_action( 'widgets_init', 'WMP_system::widget' );
-	add_action( 'wp_most_popular_list_item', 'WMP_Widget::list_items' );
+	add_action( 'wp_most_popular_list_item', 'WMP_Widget::list_items', 10, 2 );
 }

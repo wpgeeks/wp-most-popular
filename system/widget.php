@@ -125,7 +125,7 @@ class WMP_Widget extends WP_Widget {
 		wp_reset_postdata();
 	}
 
-	public function list_items( $post, $defaults ) {
+	public static function list_items( $post, $defaults ) {
 		setup_postdata( $post );
 		$post_id				= get_the_ID();
 		$title					= get_the_title() ? get_the_title() : $post_id;
