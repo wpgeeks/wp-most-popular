@@ -108,6 +108,7 @@ Yes! The plugin is open source and I host it on [Github](https://github.com/Matt
 * New filters and action introduced for use on widget (wp_most_popular_list_before, wp_most_popular_list_after, wp_most_popular_list_item, wp_most_popular_list_item_single) (thanks to [sanchothefat](https://github.com/sanchothefat) and [callerc1](https://github.com/callerc1))
 * Widget now supports thumbnails (thanks to [eduardo-marcolino](https://github.com/eduardo-marcolino))
 * Added a CSS class name to the widget list (thanks to [sinisterstuf](https://github.com/sinisterstuf))
+* Fixed a bug where the plugin was using a deprecated function (since version 4.3) to setup the widget
 
 = 0.2 =
 * Added the ability to query multiple different post types (thanks [inc2734](https://github.com/inc2734))
