@@ -1,7 +1,7 @@
 <?php
 class WMP_Widget extends WP_Widget {
 	public function __construct() {
-		parent::WP_Widget( 'wmp_widget', 'WP Most Popular', array( 'description' => 'Display your most popular blog posts on your sidebar' ) );
+		parent::__construct( 'wmp_widget', 'WP Most Popular', array( 'description' => 'Display your most popular blog posts on your sidebar' ) );
 	}
 
 	public function form( $instance ) {

@@ -2,7 +2,7 @@
 Contributors: MattGeri
 Tags: popular, most viewed, popular posts, most viewed posts, popular posts widget, popular custom type posts, most view widget, most view posts widget
 Requires at least: 3.0
-Tested up to: 4.2.2
+Tested up to: 4.3.1
 Stable tag: 0.3
 
 WP Most Popular is a simple plugin which tracks your most popular blog posts based on views and lets you display them in your theme or blog sidebar.
@@ -21,16 +21,16 @@ If you are a developer and integrate the plugin in to a theme, you will get a lo
 
 Setting up WP Most Popular is very simple. Follow these easy steps
 
-1.	Upload the plugin to your `/wp-content/plugins/` directory
-2.	Activate the plugin in your WordPress admin
-3.	Add sidebar widget or integrate functions in to your theme
+1. Upload the plugin to your `/wp-content/plugins/` directory
+2. Activate the plugin in your WordPress admin
+3. Add sidebar widget or integrate functions in to your theme
 
 == Usage ==
 
 There are two ways in which you can use this plugin.
 
-1.	As a sidebar widget
-2.	Custom function in your theme files
+1. As a sidebar widget
+2. Custom function in your theme files
 
 Using the widget is the easiest way and recommended for most users. If you are a developer and want to integrate the plugin in to your existing theme, then read the information below.
 
@@ -38,32 +38,32 @@ Firstly, the main function which you will need to include in your theme to fetch
 
 You can pass that function the following parameters in array form:
 
-*	**limit** (integer)
-	*	The number of posts you would like to display i.e. 5
-	*	Default: 5
-*	**post_type** (string) / (array)
-	*	The post type you would like to display
-	*	Example: post
-	*	Default: All post types
-*	**range** (string)
-	*	In what date range would you like to display popular posts in
-	*	Accepted: all_time, monthly, weekly, daily
-	*	Default: all_time
+* **limit** (integer)
+  * The number of posts you would like to display i.e. 5
+  * Default: 5
+* **post_type** (string) / (array)
+  * The post type you would like to display
+  * Example: post
+  * Default: All post types
+* **range** (string)
+  * In what date range would you like to display popular posts in
+  * Accepted: all_time, monthly, weekly, daily
+  * Default: all_time
 
 Those are the current parameters that the plugin supports. Let's look at an example of how to display the most recent popular posts in a unordered list.
 
-	<?php
-	echo '<ul>';
-	$posts = wp_most_popular_get_popular( array( 'limit' => 10, 'post_type' => 'post', 'range' => 'all_time' ) );
-	global $post;
-	if ( count( $posts ) > 0 ): foreach ( $posts as $post ):
-		setup_postdata( $post );
-		?>
-		<li><a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></a></li>
-		<?php
-	endforeach; endif;
-	echo '</ul>';
-	?>
+  <?php
+  echo '<ul>';
+  $posts = wp_most_popular_get_popular( array( 'limit' => 10, 'post_type' => 'post', 'range' => 'all_time' ) );
+  global $post;
+  if ( count( $posts ) > 0 ): foreach ( $posts as $post ):
+    setup_postdata( $post );
+    ?>
+    <li><a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></a></li>
+    <?php
+  endforeach; endif;
+  echo '</ul>';
+  ?>
 
 == Other Notes ==
 
@@ -114,4 +114,4 @@ Yes! The plugin is open source and I host it on [Github](https://github.com/Matt
 * You can now also choose a specific post type from the widget
 
 = 0.1 =
-*	First version of the plugin released
+* First version of the plugin released
