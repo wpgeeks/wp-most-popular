@@ -1,6 +1,6 @@
 === WP Most Popular ===
 Contributors: MattGeri
-Tags: popular, most viewed, popular posts, most viewed posts, popular posts widget, popular custom type posts, most view widget, most view posts widget
+Tags: popular, most viewed, popular posts, most viewed posts, popular posts widget, popular custom type posts, most view widget, most view posts widget, top posts, best posts
 Requires at least: 3.0
 Tested up to: 4.3.1
 Stable tag: 0.3
