@@ -3,7 +3,7 @@ Contributors: MattGeri
 Tags: popular, most viewed, popular posts, most viewed posts, popular posts widget, popular custom type posts, most view widget, most view posts widget, top posts, best posts
 Requires at least: 3.0
 Tested up to: 4.3.1
-Stable tag: 0.3
+Stable tag: 0.3.1
 
 WP Most Popular is a simple plugin which tracks your most popular blog posts based on views and lets you display them in your theme or blog sidebar.
 
@@ -39,33 +39,31 @@ Firstly, the main function which you will need to include in your theme to fetch
 You can pass that function the following parameters in array form:
 
 * **limit** (integer)
-  * The number of posts you would like to display i.e. 5
-  * Default: 5
+	* The number of posts you would like to display i.e. 5
+	* Default: 5
 * **post_type** (string) / (array)
-  * The post type you would like to display
-  * Example: post
-  * Default: All post types
+	* The post type you would like to display
+	* Example: post
+	* Default: All post types
 * **range** (string)
-  * In what date range would you like to display popular posts in
-  * Accepted: all_time, monthly, weekly, daily
-  * Default: all_time
+	* In what date range would you like to display popular posts in
+	* Accepted: all_time, monthly, weekly, daily
+	* Default: all_time
 
 Those are the current parameters that the plugin supports. Let's look at an example of how to display the most recent popular posts in a unordered list.
 
-  <?php
-  echo '<ul>';
-  $posts = wp_most_popular_get_popular( array( 'limit' => 10, 'post_type' => 'post', 'range' => 'all_time' ) );
-  global $post;
-  if ( count( $posts ) > 0 ): foreach ( $posts as $post ):
-    setup_postdata( $post );
-    ?>
-    <li><a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></a></li>
-    <?php
-  endforeach; endif;
-  echo '</ul>';
-  ?>
-
-== Other Notes ==
+	<?php
+	echo '<ul>';
+	$posts = wp_most_popular_get_popular( array( 'limit' => 10, 'post_type' => 'post', 'range' => 'all_time' ) );
+	global $post;
+	if ( count( $posts ) > 0 ): foreach ( $posts as $post ):
+		setup_postdata( $post );
+		?>
+		<li><a href="<?php the_permalink() ?>" title="<?php echo esc_attr(get_the_title() ? get_the_title() : get_the_ID()); ?>"><?php if ( get_the_title() ) the_title(); else the_ID(); ?></a></li>
+		<?php
+	endforeach; endif;
+	echo '</ul>';
+	?>
 
 = Filters =
 
@@ -102,6 +100,9 @@ Yes, please do so on the WordPress support forum for the plugin. I will consider
 Yes! The plugin is open source and I host it on [Github](https://github.com/MattGeri/WP-Most-Popular). Feel free to send me pull requests.
 
 == Changelog ==
+
+= 0.3.1 =
+* Fixed a bug where the old function `wmp_get_popular` was no longer working as it should for backwards compatibility
 
 = 0.3 =
 * New helper function name for getting the most popular posts `wp_most_popular_get_popular`. Please note that the old function name is still supported `wmp_get_popular`
