@@ -10,6 +10,7 @@ function wp_most_popular_get_popular( $args = array() ) {
 	// Default arguments
 	$limit = 5;
 	$post_type = array( 'post' );
+    $offset = 0;
 	$range = 'all_time';
 	
 	if ( isset( $args['limit'] ) ) {
@@ -24,10 +25,14 @@ function wp_most_popular_get_popular( $args = array() ) {
 		}
 	}
 	
+	if ( isset( $args['offset'] ) ) {
+		$offset = $args['offset'];
+	}
+	
 	if ( isset( $args['range'] ) ) {
 		$range = $args['range'];
 	}
-	
+
 	switch( $range ) {
 		CASE 'all_time':
 			$order = "ORDER BY all_time_stats DESC";
@@ -58,10 +63,10 @@ function wp_most_popular_get_popular( $args = array() ) {
 			p.post_type IN ( $holder ) AND
 			p.post_status = 'publish'
 		{$order}
-		LIMIT %d
+		LIMIT %d,%d
 	";
 
-	$result = $wpdb->get_results( $wpdb->prepare( $sql, array_merge( $post_type, array( $limit ) ) ), OBJECT );
+	$result = $wpdb->get_results( $wpdb->prepare( $sql, array_merge( $post_type, array( $offset ), array( $limit ) ) ), OBJECT );
 	
 	if ( ! $result) {
 		return array();
