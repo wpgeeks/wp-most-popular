@@ -81,3 +81,136 @@ if ( phpversion() > 5 ) {
 	add_action( 'widgets_init', 'WMP_system::widget' );
 	add_action( 'wp_most_popular_list_item', 'WMP_Widget::list_items', 10, 2 );
 }
+
+/**
+ * Callback function that embeds our resource in a WP_REST_Response
+ */
+function wp_most_popular_get_statistics( $request ) {
+	$limit = 5;
+	$range = 'all_time';
+	$query_params = $request->get_params();
+
+	if ( isset( $query_params['limit'] ) ) {
+		$limit = $query_params['limit'];
+	}
+
+	if ( isset( $query_params['range'] ) ) {
+		$range = $query_params['range'];
+	}
+
+	$args = array(
+		'limit' => $limit,
+		'post_type' => 'post',
+		'range' => $range,
+	);
+
+	$posts = wp_most_popular_get_popular( $args );
+
+	if ( empty($posts) ) {
+		return new WP_Error( 'wp-most-popular', __( 'No data could be found.', 'wp-most-popular' ), rest_ensure_response( $query_params ) );
+	}
+
+	return rest_ensure_response( $posts );
+}
+
+/**
+ * Validates our request argument based on details registered to the route.
+ *
+ * @param  mixed            $value   Value of the 'limit' argument.
+ * @param  WP_REST_Request  $request The current request object.
+ * @param  string           $param   Key of the parameter. In this case it is 'limit'.
+ * @return WP_Error|boolean
+ */
+function wp_most_popular_validate_limit( $value, $request, $param ) {
+	$attributes = $request->get_attributes();
+
+	if ( isset( $attributes['args'][$param] ) ) {
+		$argument = $attributes['args'][$param];
+
+		// Check that our argument is an int
+		if ( 'integer' === $argument['type'] && ! is_int($value) ) {
+				return new WP_Error( 'rest_invalid_param', sprintf( esc_html__( '%1$s is not of type %2$s', 'wp-most-popular' ), $param, 'integer' ), array( 'status' => 400 ) );
+		}
+	}
+
+	return true;
+}
+
+function wp_most_popular_sanitize_limit( $value, $request, $param ) {
+	return absint( intval( $value ) );
+}
+
+/**
+ * Validates our request argument based on details registered to the route.
+ *
+ * @param  mixed            $value   Value of the 'range' argument.
+ * @param  WP_REST_Request  $request The current request object.
+ * @param  string           $param   Key of the parameter. In this case it is 'range'.
+ * @return WP_Error|boolean
+ */
+function wp_most_popular_validate_range( $value, $request, $param ) {
+	$attributes = $request->get_attributes();
+
+	if ( isset( $attributes['args'][$param] ) ) {
+		$argument = $attributes['args'][$param];
+
+		if ( 'string' === $argument['type'] && ! is_string( $value ) ) {
+				return new WP_Error( 'rest_invalid_param', sprintf( esc_html__( '%1$s is not of type %2$s', 'wp-most-popular' ), $param, 'string' ), array( 'status' => 400 ) );
+		}
+	}
+
+	// Grab the range param schema.
+	$args = $attributes['args'][ $param ];
+
+	// If the range param is not a value in our enum then we should return an error as well.
+	if ( ! in_array( $value, $args['enum'], true ) ) {
+		return new WP_Error( 'rest_invalid_param', sprintf( __( '%s is not one of %s' ), $param, implode( ', ', $args['enum'] ) ), array( 'status' => 400 ) );
+	}
+
+	return true;
+}
+
+function wp_most_popular_sanitize_range( $value, $request, $param ) {
+	return sanitize_text_field( $value );
+}
+
+/**
+ * Arguments for the posts endpoint
+ */
+function wp_most_popular_get_statistics_arguments() {
+	$args = array();
+
+	// Schema for the limit argument
+	$args['limit'] = array(
+		'description' => esc_html__( 'Number of posts to be returned.', 'wp-most-popular' ),
+		'type' => 'int',
+		'default' => 5,
+		'validate_callback' => 'wp_most_popular_validate_limit',
+		'sanitize_callback' => 'wp_most_popular_sanitize_limit',
+	);
+
+	// Scheam for the range argument
+	$args['range'] = array(
+		'description' => esc_html__( 'Obtain statistics based upon a time range', 'wp-most-popular' ),
+		'type' => 'string',
+		'enum' => array( 'all_time', 'daily', 'weekly', 'monthly' ),
+		'default' => 'all_time',
+		'validate_callback' => 'wp_most_popular_validate_range',
+		'sanitize_callback' => 'wp_most_popular_sanitize_range',
+	);
+
+	return $args;
+}
+
+function wp_most_popular_register_routes() {
+	$NAMESPACE = 'wp-most-popular/v1';
+
+	register_rest_route( $NAMESPACE, '/posts', array(
+			array('methods'  => WP_REST_Server::READABLE,
+			'callback' => 'wp_most_popular_get_statistics',
+			'args' => wp_most_popular_get_statistics_arguments(),
+			),
+	) );
+}
+
+add_action( 'rest_api_init', 'wp_most_popular_register_routes' );
