@@ -75,7 +75,7 @@ class WMP_Widget extends WP_Widget {
 			$options['timeline'] = esc_attr( $instance[ 'timeline' ] );
 		else
 			$options['timeline'] = 'all_time';
-			
+
 		if ( isset( $instance[ 'thumbnail' ] ) )
 			$options['thumbnail'] = esc_attr( $instance[ 'thumbnail' ] );
 		else
@@ -108,7 +108,6 @@ class WMP_Widget extends WP_Widget {
 		}
 
 		$posts					= wp_most_popular_get_popular( $options );
-		$thumbnail_size	= preg_match("/\d{1,}x\d{1,}/", $defaults['thumbnail_size']) === 1 ? explode('x', $defaults['thumbnail_size']):  $defaults['thumbnail_size'];
 
 		// Display the widget
 		echo $before_widget;
@@ -131,6 +130,7 @@ class WMP_Widget extends WP_Widget {
 		$title					= get_the_title() ? get_the_title() : $post_id;
 		$post_class			= implode(get_post_class());
 		$permalink			= get_permalink();
+		$thumbnail_size	= preg_match("/\d{1,}x\d{1,}/", $defaults['thumbnail_size']) === 1 ? explode('x', $defaults['thumbnail_size']):  $defaults['thumbnail_size'];
 		$pre_thumbnail	= (has_post_thumbnail() && $defaults['thumbnail'] == 'before_title') ? get_the_post_thumbnail(get_the_ID(), $thumbnail_size) : '';
 		$post_thumbnail	= (has_post_thumbnail() && $defaults['thumbnail'] == 'after_title') ? get_the_post_thumbnail(get_the_ID(), $thumbnail_size) : '';
 		$item						= '
