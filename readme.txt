@@ -1,9 +1,12 @@
 === WP Most Popular ===
-Contributors: MattGeri
+Contributors: MattGeri, thenga
 Tags: popular, most viewed, popular posts, most viewed posts, popular posts widget, popular custom type posts, most view widget, most view posts widget, top posts, best posts
 Requires at least: 3.0
-Tested up to: 4.3.1
+Tested up to: 4.9.4
+Requires PHP: 5.2.4
 Stable tag: 0.3.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 WP Most Popular is a simple plugin which tracks your most popular blog posts based on views and lets you display them in your theme or blog sidebar.
 
@@ -16,6 +19,8 @@ The plugin keeps a log of your most popular posts based on views and lets you di
 It also comes with a sidebar widget to let you display your popular posts on your blogs sidebar.
 
 If you are a developer and integrate the plugin in to a theme, you will get a lot more flexibility out of the plugin including the ability to show the most popular custom post types etc.
+
+This plugin was built and is maintained by [Thenga](https://thenga.com).
 
 == Installation ==
 
@@ -97,7 +102,11 @@ Yes, please do so on the WordPress support forum for the plugin. I will consider
 
 = Can I contribute code to the plugin? =
 
-Yes! The plugin is open source and I host it on [Github](https://github.com/MattGeri/WP-Most-Popular). Feel free to send me pull requests.
+Yes! The plugin is open source and I host it on [Github](https://github.com/ThengaDotCom/WP-Most-Popular). Feel free to send me pull requests.
+
+= Where can I get support for the plugin? =
+
+This plugin is managed by Thenga and you can contact our support team on our [website](https://thenga.com).
 
 == Changelog ==
 
