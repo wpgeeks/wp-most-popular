@@ -1,8 +1,8 @@
 === WP Most Popular ===
-Contributors: MattGeri, thenga
+Contributors: thenga, MattGeri
 Tags: popular, most viewed, popular posts, most viewed posts, popular posts widget, popular custom type posts, most view widget, most view posts widget, top posts, best posts
 Requires at least: 3.0
-Tested up to: 4.9.4
+Tested up to: 4.9.5
 Requires PHP: 5.2.4
 Stable tag: 0.3.1
 License: GPLv2 or later
@@ -20,7 +20,7 @@ It also comes with a sidebar widget to let you display your popular posts on you
 
 If you are a developer and integrate the plugin in to a theme, you will get a lot more flexibility out of the plugin including the ability to show the most popular custom post types etc.
 
-This plugin was built and is maintained by [Thenga](https://thenga.com).
+This plugin was built and is maintained by [Thenga](https://thenga.com). For extra documentation, videos, snippets and support, visit the [WP Most Popular](https://thenga.com/product/wp-most-popular/) product page.
 
 == Installation ==
 

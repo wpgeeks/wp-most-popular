@@ -1,14 +1,14 @@
 <?php
 /*
 	Plugin Name: WP Most Popular
-	Plugin URI: http://mattgeri.com
-	Description: Flexible plugin to show most popular posts based on views
+	Plugin URI: https://thenga.com/product/wp-most-popular/
+	Description: Flexible plugin to show your most popular posts based on views
 	Version: 0.3.1
-	Author: Matt Geri
-	Author URI: http://mattgeri.com
+	Author: Thenga
+	Author URI: http://thenga.com
 	License: GPL2
 
-	Copyright 2011 Matt Geri (email: matt@mattgeri.com)
+	Copyright 2011 Matt Geri (email: support@thenga.com)
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as
