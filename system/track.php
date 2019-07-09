@@ -24,9 +24,9 @@ class WMP_track {
 				$wpdb->query( $wpdb->prepare( "INSERT INTO {$wpdb->prefix}most_popular (post_id, last_updated, 1_day_stats, 7_day_stats, 30_day_stats, all_time_stats, raw_stats) VALUES ('%d', NOW(), '0', '0', '0', '0', '')", array( $this->post_id ) ) );
 			}
 			
-			$count_1 = $this->calculate_1_day_stats( $raw_stats, $date );
-			$count_7 = $this->calculate_7_day_stats( $raw_stats, $date );
-			$count_30 = $this->calculate_30_day_stats( $raw_stats, $date );
+			$count_1 = $this->calculate_1_day_stats( $raw_stats, 1 );
+			$count_7 = $this->calculate_7_day_stats( $raw_stats, 7 );
+			$count_30 = $this->calculate_30_day_stats( $raw_stats, 30 );
 			
 			if ( isset( $row_stats ) && count( $raw_stats ) >= 30 ) {
 				array_shift( $raw_stats );
@@ -45,51 +45,36 @@ class WMP_track {
 	}
 	
 	/**
-	 * TODO: Refactor functions below into 1 function
+	 * Calculate stats for 'n' days from today's date
+	 *
+	 * @param [int] $existing_stats
+	 * @param [int] $days
+	 * @return int
 	 */
-	
-	private function calculate_1_day_stats( $existing_stats, $date ) {
+	private function calculate_stats( $existing_stats, $days ) {
 		if ( $existing_stats ) {
-			if ( isset( $existing_stats[$date] ) ) {
-				return $existing_stats[$date] + 1;
-			}
-		}
-		return 1;
-	}
-	
-	private function calculate_7_day_stats( $existing_stats, $date ) {
-		if ( $existing_stats ) {
-			$extra_to_add = 0;
-			if ( isset( $existing_stats[$date] ) ) {
-				$extra_to_add = $existing_stats[$date];
-			}
-			$total = 0;
-			for ( $i = 1; $i < 7; $i++ ) {
-				$old_date = date('Y-m-d', strtotime( "-{$i} days" ) );
-				if ( isset( $existing_stats[$old_date] ) ) {
-					$total += $existing_stats[$old_date];
+				$date = gmdate('Y-m-d');
+				$current_stats = 0;
+
+				if ( isset( $existing_stats[$date] ) ) {
+						$current_stats = $existing_stats[$date];
+
+						if ( $days == 1 ) {
+								return $current_stats + 1;
+						}
 				}
-			}
-			return $total + $extra_to_add + 1;
-		}
-		return 1;
-	}
-	
-	private function calculate_30_day_stats( $existing_stats, $date ) {
-		if ( $existing_stats ) {
-			$extra_to_add = 0;
-			if ( isset( $existing_stats[$date] ) ) {
-				$extra_to_add = $existing_stats[$date];
-			}
-			$total = 0;
-			for ( $i = 1; $i < 30; $i++ ) {
-				$old_date = date('Y-m-d', strtotime( "-{$i} days" ) );
-				if ( isset( $existing_stats[$old_date] ) ) {
-					$total += $existing_stats[$old_date];
+
+				for ( $i = 1; $i < $days; $i++ ) {
+						$old_date = date('Y-m-d', strtotime( "-{$i} days" ) );
+
+						if ( isset($existing_stats[$old_date] ) ) {
+								$current_stats += $existing_stats[$old_date];
+						}
 				}
-			}
-			return $total + $extra_to_add + 1;
+
+				return $current_stats + 1;
 		}
+
 		return 1;
 	}
 }
